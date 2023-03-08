@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class indexController {
+public class IndexController {
 
     /**
      * 跳转到登录页
@@ -39,10 +39,13 @@ public class indexController {
      * @return
      */
     @GetMapping("/index.html")
-    public String mainPage(){
-
-
-        return "index";
-
+    public String mainPage(HttpSession session,Model model){
+        Object loginUser = session.getAttribute("loginUser");
+        if(loginUser != null){
+            return "index";
+        }else{
+            model.addAttribute("msg","账号密码错误");
+            return "login";
+        }
     }
 }
